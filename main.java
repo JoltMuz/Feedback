@@ -30,7 +30,7 @@ public final class main extends JavaPlugin implements CommandExecutor, Listener
 
     }
     HashMap<String,Double> Ratings = new HashMap<>();
-    HashMap<String,Integer> VotedPlayers = new HashMap<>();
+    HashMap<String,String> VotedPlayers = new HashMap<>();
     String signature = ChatColor.GOLD + ChatColor.BOLD.toString() + "Feedback" + ChatColor.DARK_GRAY + " 》";
     @Override
     public boolean onCommand(CommandSender Sender, Command command, String alias, String[] args)
@@ -131,47 +131,47 @@ public final class main extends JavaPlugin implements CommandExecutor, Listener
         {
             if (Ratings.containsKey(args[1]))
             {
-                if (! VotedPlayers.containsKey(Sender.getName()))
+                if (VotedPlayers.containsKey(Sender.getName()) && VotedPlayers.get(Sender.getName()).equalsIgnoreCase(args[1]))
+                {
+                    Sender.sendMessage(signature + ChatColor.DARK_GRAY + "You've already voted!");
+                }
+                else
                 {
                     if (args[2].equals("5"))
                     {
-                        VotedPlayers.put(Sender.getName(),1);
+                        VotedPlayers.put(Sender.getName(),args[1]);
                         Ratings.put(args[1],(Ratings.get(args[1]) + 5 ) / (double) VotedPlayers.size());
                         Sender.sendMessage(signature + ChatColor.YELLOW + "Thanks for your feedback!");
                     }
                     if (args[2].equals("4"))
                     {
-                        VotedPlayers.put(Sender.getName(),1);
+                        VotedPlayers.put(Sender.getName(), args[1]);
                         Ratings.put(args[1],(Ratings.get(args[1]) + 4 ) / (double) VotedPlayers.size());
                         Sender.sendMessage(signature + ChatColor.YELLOW + "Thanks for your feedback!");
                     }
                     if (args[2].equals("3"))
                     {
-                        VotedPlayers.put(Sender.getName(),1);
+                        VotedPlayers.put(Sender.getName(),args[1]);
                         Ratings.put(args[1],(Ratings.get(args[1]) + 3 ) / (double) VotedPlayers.size());
                         Sender.sendMessage(signature + ChatColor.YELLOW + "Thanks for your feedback!");
                     }
                     if (args[2].equals("2"))
                     {
-                        VotedPlayers.put(Sender.getName(),1);
+                        VotedPlayers.put(Sender.getName(),args[1]);
                         Ratings.put(args[1],(Ratings.get(args[1]) + 2 ) / (double) VotedPlayers.size());
                         Sender.sendMessage(signature + ChatColor.YELLOW + "Thanks for your feedback!");
                     }
                     if (args[2].equals("1"))
                     {
-                        VotedPlayers.put(Sender.getName(),1);
+                        VotedPlayers.put(Sender.getName(),args[1]);
                         Ratings.put(args[1],(Ratings.get(args[1]) + 1 ) / (double) VotedPlayers.size());
                         Sender.sendMessage(signature + ChatColor.YELLOW + "Thanks for your feedback!");
                     }
                 }
-                else
-                {
-                    Sender.sendMessage(signature + ChatColor.DARK_GRAY + "You've already voted!");
-                }
             }
             else
             {
-                Sender.sendMessage(signature + ChatColor.DARK_GRAY + "That title does not exist!");
+                Sender.sendMessage(signature + ChatColor.DARK_GRAY + "That rating does not exist!");
             }
         }
         else
